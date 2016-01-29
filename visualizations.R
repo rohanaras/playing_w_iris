@@ -12,3 +12,6 @@ magnitudes = table(yearEvents$magnitude[!is.na(yearEvents$magnitude)])
 
 plot(magnitudes, xlab="Magnitude of Earthquake", ylab="Count", main="Number of Earthquakes by Magnitude")
 plot(cumsum(magnitudes)) #need to fix this plot to have a linear x-axis
+
+
+# why does the second plot look bimodal? is it because there is some more granualar data?
