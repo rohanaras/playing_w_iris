@@ -2,18 +2,20 @@ library(IRISSeismic)
 library(maps)
 iris <- new("IrisClient")
 
-starttime <- as.POSIXct("2008-1-1", tx='GMT')
-endtime <- starttime + 3600 * 24 * 365 * 8
+starttime <- as.POSIXct("2015-1-1", tx='GMT')
+endtime <- starttime + 3600 * 24 * 365
 yearEvents <- getEvent(iris, starttime, endtime)
 
-# map()
-# points(yearEvents$longitude, yearEvents$latitude, pch=16, col=heat.colors(10)[rev(floor(yearEvents$magnitude))], cex=(yearEvents$magnitude/5)^2)
+map()
+points(yearEvents$longitude, yearEvents$latitude, pch=16, col=heat.colors(7)[rev(floor(yearEvents$magnitude))], cex=10^(1.5 * yearEvents$magnitude + 4.8)/10000)
 
 filteredDF = yearEvents[!is.na(yearEvents$magnitude),]
 magnitudes = filteredDF$magnitude
 magnitudesTable = table(magnitudes)
 
-hist(magnitudes)
+hist(magnitudes, main = "Magnitude of Earthquakes from 2008-2015", ylab = 'Frequency', xlab = 'Magnitude')
+
+plot(filteredDF$time, filteredDF$depth)
 
 plot(magnitudesTable, xlab="Magnitude of Earthquake", ylab="Count", main="Number of Earthquakes by Magnitude")
 plot(cumsum(magnitudesTable)) #need to fix this plot to have a linear x-axis
