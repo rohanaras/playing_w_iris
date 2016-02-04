@@ -6,8 +6,9 @@ starttime <- as.POSIXct("2015-1-1", tx='GMT')
 endtime <- starttime + 3600 * 24 * 365
 yearEvents <- getEvent(iris, starttime, endtime)
 
+yearEvents = yearEvents[order(yearEvents$magnitude),]
 map()
-points(yearEvents$longitude, yearEvents$latitude, pch=16, col=heat.colors(7)[rev(floor(yearEvents$magnitude))], cex=10^(1.5 * yearEvents$magnitude + 4.8)/10000)
+points(yearEvents$longitude, yearEvents$latitude, pch=16, col=heat.colors(7)[floor(yearEvents$magnitude)], cex=1.5^(yearEvents$magnitude)/10)
 
 filteredDF = yearEvents[!is.na(yearEvents$magnitude),]
 magnitudes = filteredDF$magnitude
